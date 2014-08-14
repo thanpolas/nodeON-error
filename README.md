@@ -33,7 +33,30 @@ the nodeON-error package offers signed Error Objects which are an extension of t
 ```js
 var appError = require('nodeON-error');
 
-var error = new appError.Error();
+// A new error with a message
+var error = new appError.Error('A message');
+```
+
+### Handling Existing Errors
+
+When an Error gets thrown from a any other library than your app or library then simply supply the *alien* to the constructor:
+
+```js
+var fs = require('fs');
+
+var appError = require('nodeON-error');
+
+function stat(filepath, cb) {
+    fs.stat(filepath, function (err, stats) {
+        if (err) {
+            var ourErr = appError.Error(err);
+            ourErr.message('Oppsy');
+            cb(ourErr);
+        } else {
+            cb(null, stats);
+        }
+    });
+}
 ```
 
 ## API
