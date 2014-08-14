@@ -1,7 +1,7 @@
 {
   "name": "nodeON-error",
   "version": "0.0.0",
-  "main": "./lib/nodeON-error",
+  "main": "./lib/error",
   "description": "Error Objects for the nodeON package.",
   "homepage": "https://github.com/thanpolas/nodeON-error",
   "bugs": "https://github.com/thanpolas/nodeON-error/issues",

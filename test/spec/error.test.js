@@ -11,7 +11,7 @@ require('../lib/tester.lib');
 chai.config.includeStack = true;
 
 // lib to test
-var appError = require('../../back/util/error');
+var appError = require('../..');
 
 describe('Error Objects', function () {
 
