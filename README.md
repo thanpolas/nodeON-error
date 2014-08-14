@@ -267,7 +267,7 @@ This is for errors of authentication nature.
 
 ## Release History
 
-- **v0.0.2**, *14 Aug 2014*
+- **v0.0.3**, *14 Aug 2014*
     - Big Bang
 
 ## License
