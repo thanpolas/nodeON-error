@@ -1,6 +1,6 @@
 # nodeON-error
 
-> Error Objects for the nodeON package
+> Error Objects for everybody!
 
 [![Build Status](https://secure.travis-ci.org/thanpolas/nodeON-error.png?branch=master)](http://travis-ci.org/thanpolas/nodeON-error)
 
