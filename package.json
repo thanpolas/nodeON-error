@@ -1,11 +1,10 @@
 {
-  "private": true,
-  "name": "__proto__",
+  "name": "nodeON-error",
   "version": "0.0.0",
-  "main": "./lib/__proto__",
-  "description": "EDIT",
-  "homepage": "https://github.com/thanpolas/__proto__",
-  "bugs": "https://github.com/thanpolas/__proto__/issues",
+  "main": "./lib/nodeON-error",
+  "description": "Error Objects for the nodeON package.",
+  "homepage": "https://github.com/thanpolas/nodeON-error",
+  "bugs": "https://github.com/thanpolas/nodeON-error/issues",
   "author": {
     "name": "Thanasis Polychronakis",
     "email": "thanpolas@gmail.com",
@@ -13,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/thanpolas/__proto__"
+    "url": "https://github.com/thanpolas/nodeON-error"
   },
   "licenses": [
     {
@@ -24,8 +23,6 @@
     "test": "./node_modules/.bin/mocha -b test/spec -u bdd  -R spec"
   },
   "dependencies": {
-    "cip": "~0.2.4",
-    "bluebird": "~2.1.3",
     "lodash": "~2.4.1"
   },
   "devDependencies": {
