@@ -98,7 +98,6 @@ describe('Error Objects', function () {
         'message',
         'srcError',
         'error',
-        'JSONexception',
       ]);
     });
   });
