@@ -21,6 +21,12 @@ module.exports = function (grunt) {
         tagMessage: 'v<%= version %>' //default: 'Version <%= version %>'
       }
     },
+    jshint: {
+      options: {
+        jshintrc: true,
+      },
+      lib: ['lib/**/*.js'],
+    },
   });
 
   // Default task.
