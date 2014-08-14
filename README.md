@@ -17,6 +17,14 @@ npm install nodeON-error --save
 1. [Overview](#overview)
 1. [API](#api)
     1. [Signing the Error Objects](#setName)
+    1. [Getting an API Safe verison](#toApi)
+1. [Error Types](#error-types)
+    1. [The Unknown Error](#unknownError)
+    1. [The JSON Error](#jsonError)
+    1. [The Database Error](#databaseError)
+    1. [The Validation Error](#validationError)
+        1. [The Validation Item](#validationItem)
+    1. [The Authentication Error](#authError)
 
 ## Overview
 
@@ -51,6 +59,27 @@ console.log(error.name);
 
 **[[⬆]](#TOC)**
 
+### <a name='toApi'>Getting an API Safe verison</a>
+
+> ### errInstance.toApi()
+>
+> *Returns* `Object` A sanitized object.
+
+Clones the error object and strips it of all the `Error` getters (like `stack`) and the following attributes:
+    
+    * `srcError`
+
+```js
+var appErr = require('nodeON-error');
+
+var error = new appErr.Error();
+
+console.log(error.toApi());
+```
+
+**[[⬆]](#TOC)**
+
+
 ## Error Types
 
 The following error types are available:
@@ -67,7 +96,7 @@ This is the default base error object.
 
 * `name` **string** Signs the error.
 * `message` **string** The error message.
-* `srcError` **?Object** If an Error Object was supplied it will exist here.
+* `srcError` **?Error** If an Error Object was supplied it will exist here.
 * `error` **boolean** Always true.
 * `stack` **string** The stack trace.
 
@@ -81,15 +110,34 @@ This is the default base error object.
 
 This is for errors of unknown nature.
 
+#### Instance Properties
+
+* `name` **string** Signs the error.
+* `message` **string** The error message.
+* `srcError` **?Error** If an Error Object was supplied it will exist here.
+* `error` **boolean** Always true.
+* `stack` **string** The stack trace.
+
 **[[⬆]](#TOC)**
+
+### <a name='jsonError'>The JSON Error</a>
+
+> ### new appError.JSON(exception)
+>
+>    * **exception** `Error` The JSON Exception.
+
+This is for errors originating from JSON parsing or stringifying.
 
 #### Instance Properties
 
 * `name` **string** Signs the error.
 * `message` **string** The error message.
-* `srcError` **?Object** If an Error Object was supplied it will exist here.
+* `srcError` **Error** The original JSON exception.
 * `error` **boolean** Always true.
 * `stack` **string** The stack trace.
+
+**[[⬆]](#TOC)**
+
 
 ### <a name='databaseError'>The Database Error</a>
 
@@ -103,20 +151,96 @@ This is for errors originating for the database.
 
 * `name` **string** Signs the error.
 * `message` **string** The error message.
-* `srcError` **?Object** If an Error Object was supplied it will exist here.
+* `srcError` **?Error** If an Error Object was supplied it will exist here.
 * `error` **boolean** Always true.
 * `stack` **string** The stack trace.
 * `type` **string** A value from the db error types enumeration available through `appError.Database.Type`:
-    * `appError.Database.Type.UNKNOWN` "unknown" The unknown error type.
-    * `appError.Database.Type.MONGO` "mongo" The mongo error type.
-    * `appError.Database.Type.REDIS` "redis" The redis error type.
-    * `appError.Database.Type.MONGOOSE` "mongoose" The mongoose error type.
-    * `appError.Database.Type.CAST` "cast" The cast error type.
-    * `appError.Database.Type.VALIDATION` "validation" The validation error type.
-    * `appError.Database.Type.CRYPTO` "crypto" The crypto error type.
+    * `appError.Database.Type.UNKNOWN` "unknown" **default**
+    * `appError.Database.Type.MONGO` "mongo"
+    * `appError.Database.Type.REDIS` "redis"
+    * `appError.Database.Type.MONGOOSE` "mongoose"
+    * `appError.Database.Type.CAST` "cast"
+    * `appError.Database.Type.VALIDATION` "validation"
+    * `appError.Database.Type.CRYPTO` "crypto"
 
 **[[⬆]](#TOC)**
 
+### <a name='validationError'>The Validation Error</a>
+
+> ### new appError.Validation(optMessage)
+>
+>    * **optMessage** `string|Error=` Optionally define a message for the error or supply an existing error.
+
+This is for errors originating from validation operations.
+
+#### Instance Properties
+
+* `name` **string** Signs the error.
+* `message` **string** The error message.
+* `srcError` **?Error** If an Error Object was supplied it will exist here.
+* `error` **boolean** Always true.
+* `errors` **Array** An array of `appError.ValidationItem` objects, see [validationItem](#validationItem).
+
+#### <a name='validationItem'>The Validation Item</a>
+
+> #### new appError.ValidationItem(message, optPath, optType, optValue)
+>
+>    * **message** `string` The message for the error.
+>    * **optPath** `string=` The key that triggered the validation error.
+>    * **optType** `string=` The type of the validation error.
+>    * **optValue** `string=` The value used that generated the error.
+
+Creates a Validation Item to inject to the [Validation Error](#validationError).
+
+##### Validation Item Properties
+
+* `message` **string** The error message.
+* `path` **string** The attribute that generated the error.
+* `value` ** * ** The value that generated the error.
+* `type` **string** A value for the validation error type (free text).
+
+##### Example Usage
+
+```js
+var appError = require('nodeON-error');
+
+var validationError = new appError.ValidationError();
+
+var validItem = new appError.ValidationItem('Not valid email');
+validItem.path = 'email';
+validItem.type = 'invalid';
+validItem.value = 'email@bogus';
+
+validationError.errors.push(validItem);
+```
+
+**[[⬆]](#TOC)**
+
+### <a name='authError'>The Authentication Error</a>
+
+> ### new appError.Authentication(optMessage)
+>
+>    * **optMessage** `string|Error=` Optionally define a message for the error or supply an existing error.
+
+This is for errors of authentication nature.
+
+#### Instance Properties
+
+* `name` **string** Signs the error.
+* `message` **string** The error message.
+* `srcError` **?Error** If an Error Object was supplied it will exist here.
+* `error` **boolean** Always true.
+* `stack` **string** The stack trace.
+* `type` **string** A value from the auth error types enumeration available through `appError.Authentication.Type`:
+    * `appError.Authentication.Type.UNKNOWN` "unknown" **default**
+    * `appError.Authentication.Type.EMAIL` "email"
+    * `appError.Authentication.Type.PASSWORD` "password"
+    * `appError.Authentication.Type.SESSION` "session"
+    * `appError.Authentication.Type.SOCKET` "socket"
+    * `appError.Authentication.Type.AUTH_TOKEN` "authToken"
+    * `appError.Authentication.Type.INSUFFICIENT_CREDENTIALS` "insufficientCredentials"
+
+**[[⬆]](#TOC)**
 
 ## Release History
 
