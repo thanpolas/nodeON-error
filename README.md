@@ -9,7 +9,7 @@
 Install the module using NPM:
 
 ```
-npm install nodeON-error --save
+npm install nodeon-error --save
 ```
 
 ## <a name='TOC'>Table of Contents</a>
@@ -28,10 +28,10 @@ npm install nodeON-error --save
 
 ## Overview
 
-the nodeON-error package offers signed Error Objects which are an extension of the `Error` native Object.
+the nodeon-error package offers signed Error Objects which are an extension of the `Error` native Object.
 
 ```js
-var appError = require('nodeON-error');
+var appError = require('nodeon-error');
 
 // A new error with a message
 var error = new appError.Error('A message');
@@ -44,7 +44,7 @@ When an Error gets thrown from a any other library than your app or library then
 ```js
 var fs = require('fs');
 
-var appError = require('nodeON-error');
+var appError = require('nodeon-error');
 
 function stat(filepath, cb) {
     fs.stat(filepath, function (err, stats) {
@@ -70,7 +70,7 @@ function stat(filepath, cb) {
 All Error Objects are *signed* by setting the `name` property. This method sets the name with which to prepend all signatures, make sure the first char is uppercase.
 
 ```js
-var appErr = require('nodeON-error');
+var appErr = require('nodeon-error');
 
 appErr.setName('Myapp');
 
@@ -93,7 +93,7 @@ Clones the error object and strips it of all the `Error` getters (like `stack`) 
     * `srcError`
 
 ```js
-var appErr = require('nodeON-error');
+var appErr = require('nodeon-error');
 
 var error = new appErr.Error();
 
@@ -225,7 +225,7 @@ Creates a Validation Item to inject to the [Validation Error](#validationError).
 ##### Example Usage
 
 ```js
-var appError = require('nodeON-error');
+var appError = require('nodeon-error');
 
 var validationError = new appError.ValidationError();
 
@@ -267,7 +267,7 @@ This is for errors of authentication nature.
 
 ## Release History
 
-- **v0.0.1**, *14 Aug 2014*
+- **v0.0.2**, *14 Aug 2014*
     - Big Bang
 
 ## License

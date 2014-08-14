@@ -1,5 +1,5 @@
 {
-  "name": "nodeON-error",
+  "name": "nodeon-error",
   "version": "0.0.1",
   "main": "./lib/error",
   "description": "Error Objects for the nodeON package.",
