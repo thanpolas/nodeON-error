@@ -6,18 +6,16 @@ var chai = require('chai');
 var expect = chai.expect;
 // var __ = require('lodash');
 
-var tester = require('../lib/tester.lib');
+require('../lib/tester.lib');
 
 chai.config.includeStack = true;
 
 // lib to test
 var appError = require('../../back/util/error');
 
-describe.only('Error Objects', function () {
+describe('Error Objects', function () {
 
-  tester.init();
-
-  describe.only('API Surface', function() {
+  describe('API Surface', function() {
     function testError (instance) {
       expect(instance).to.be.instanceOf(appError.BaseError);
       expect(instance).to.be.instanceOf(Error);
