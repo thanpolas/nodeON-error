@@ -39,7 +39,11 @@ var error = new appError.Error('A message');
 
 ### Handling Existing Errors
 
-When an Error gets thrown from a any other library than your app or library then simply supply the *alien* to the constructor:
+When an Error gets thrown from any other library you may simply supply the *alien* Error Object to the first argument of the constructor. Once this is done nodeon-error will do the following:
+
+* It will store the third-party Error Object intact in the `srcError` property.
+* It will copy all enumerable properties of the third-party Error Object in the new nodeon-error Object.
+* It will get the error message and propagate it to the `message` property of the new nodeon-error Object.
 
 ```js
 var fs = require('fs');
@@ -50,13 +54,23 @@ function stat(filepath, cb) {
     fs.stat(filepath, function (err, stats) {
         if (err) {
             var ourErr = appError.Error(err);
-            ourErr.message('Oppsy');
+            ourErr.message = 'Oppsy';
             cb(ourErr);
         } else {
             cb(null, stats);
         }
     });
 }
+
+// ....
+
+stat('bogus', function(err, res) {
+    console.log(err.message);
+    // --> ENOENT, no such file or directory 'bogus'
+
+    console.log(err.srcError);
+    // --> Will display the original Error Object from fs.
+});
 ```
 
 ## API
