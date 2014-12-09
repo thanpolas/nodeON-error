@@ -281,6 +281,8 @@ This is for errors of authentication nature.
 
 ## Release History
 
+- **v0.1.2**, *09 Dec 2014*
+    - Fix reverse assignment of injected errors
 - **v0.1.1**, *21 Nov 2014*
     - Handle external errors wrapping better.
 - **v0.1.0**, *14 Aug 2014*
