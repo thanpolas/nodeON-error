@@ -101,8 +101,8 @@ console.log(error.name);
 
 All Error Objects extend the Javascript native `Error` Object, thus have all built-in properties. Additionally, the following properties are augmenting the Error Object:
 
-* `name` **string** A Name composed of [your signature](setName) and the Error Type.
-* `srcError` **?Error** If you instantiate a NodeON Error object with a third-party Error as the first argument of the constructor, it will be stored in this property, otherwise it will be `null`. [See Handling Existing Errors](existingErrors).
+* `name` **string** A Name composed of [your signature](#setName) and the Error Type.
+* `srcError` **?Error** If you instantiate a NodeON Error object with a third-party Error as the first argument of the constructor, it will be stored in this property, otherwise it will be `null`. [See Handling Existing Errors](#existingErrors).
 * `error` **boolean** Always true, helper for consumers to determine if result is an error.
 * `httpCode` **number** Indicates the HTTP Response Code to use, default is 500.
 * `isNodeOn` **boolean** Always true, indicates that the error object is an instance of NodeON.
@@ -319,7 +319,7 @@ This is for errors of authentication nature.
 ## Release History
 
 - **v0.2.0**, *15 Dec 2014*
-    - Added three new attributes to all error objects: `type`, `httpCode`, `isNodeon`, [read docs for more](properties).
+    - Added three new attributes to all error objects: `type`, `httpCode`, `isNodeon`, [read docs for more](#properties).
     - Renamed the `type` property to `subType` on **Authentication** and **Database** type errors.
 - **v0.1.2**, *09 Dec 2014*
     - Fix reverse assignment of injected errors
