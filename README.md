@@ -318,6 +318,9 @@ This is for errors of authentication nature.
 
 ## Release History
 
+- **v0.2.0**, *15 Dec 2014*
+    - Added three new attributes to all error objects: `type`, `httpCode`, `isNodeon`, read docs for more.
+    - Renamed the `type` property to `subType` on **Authentication** and **Database** type errors.
 - **v0.1.2**, *09 Dec 2014*
     - Fix reverse assignment of injected errors
 - **v0.1.1**, *21 Nov 2014*
