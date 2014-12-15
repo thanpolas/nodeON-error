@@ -15,9 +15,10 @@ npm install nodeon-error --save
 ## <a name='TOC'>Table of Contents</a>
 
 1. [Overview](#overview)
+    1. [Handling existing errors](#existingErrors)
+    1. [Error Properties](#properties)
 1. [API](#api)
     1. [Signing the Error Objects](#setName)
-    1. [Error Properties](#properties)
     1. [Getting an API Safe version](#toApi)
 1. [Error Types](#error-types)
     1. [The Unknown Error](#unknownError)
@@ -74,6 +75,27 @@ stat('bogus', function(err, res) {
 });
 ```
 
+**[[⬆]](#TOC)**
+
+### <a name='properties'>Error Properties</a>
+
+All Error Objects extend the Javascript native `Error` Object, thus have all built-in properties. Additionally, the following properties are augmenting the Error Object:
+
+* `name` **string** A Name composed of [your signature](#setName) and the Error Type.
+* `srcError` **?Error** If you instantiate a NodeON Error object with a third-party Error as the first argument of the constructor, it will be stored in this property, otherwise it will be `null`. [See Handling Existing Errors](#existingErrors).
+* `error` **boolean** Always true, helper for consumers to determine if result is an error.
+* `httpCode` **number** Indicates the HTTP Response Code to use, default is 500.
+* `isNodeOn` **boolean** Always true, indicates that the error object is an instance of NodeON.
+* `type` **string** An enumeration of all the NodeON Error types, possible values are:
+    * `error`
+    * `unknown`
+    * `validation`
+    * `authentication`
+    * `database`
+    * `json`
+
+**[[⬆]](#TOC)**
+
 ## API
 
 ### <a name='setName'>Signing the Error Objects</a>
@@ -94,25 +116,6 @@ var error = new appErr.Error();
 console.log(error.name);
 // prints: "MyappBaseError"
 ```
-
-**[[⬆]](#TOC)**
-
-### <a name='properties'>Error Properties</a>
-
-All Error Objects extend the Javascript native `Error` Object, thus have all built-in properties. Additionally, the following properties are augmenting the Error Object:
-
-* `name` **string** A Name composed of [your signature](#setName) and the Error Type.
-* `srcError` **?Error** If you instantiate a NodeON Error object with a third-party Error as the first argument of the constructor, it will be stored in this property, otherwise it will be `null`. [See Handling Existing Errors](#existingErrors).
-* `error` **boolean** Always true, helper for consumers to determine if result is an error.
-* `httpCode` **number** Indicates the HTTP Response Code to use, default is 500.
-* `isNodeOn` **boolean** Always true, indicates that the error object is an instance of NodeON.
-* `type` **string** An enumeration of all the NodeON Error types, possible values are:
-    * `error`
-    * `unknown`
-    * `validation`
-    * `authentication`
-    * `database`
-    * `json`
 
 **[[⬆]](#TOC)**
 
