@@ -20,6 +20,9 @@ describe('Error Objects', function () {
       expect(instance).to.be.instanceOf(appError.BaseError);
       expect(instance).to.be.instanceOf(Error);
       expect(instance.error).to.be.true;
+      expect(instance.isNodeon).to.be.true;
+      expect(instance.httpCode).to.be.a('number');
+      expect(instance.type).to.be.a('string');
       expect(instance.stack).to.have.length.above(100);
     }
 
@@ -34,6 +37,9 @@ describe('Error Objects', function () {
         'message',
         'srcError',
         'error',
+        'httpCode',
+        'type',
+        'isNodeon',
       ]);
     });
     it('Validation Error should be instance of BaseError, Error', function(){
@@ -47,6 +53,9 @@ describe('Error Objects', function () {
         'srcError',
         'error',
         'errors',
+        'httpCode',
+        'type',
+        'isNodeon',
       ]);
     });
     it('Unknown Error should be instance of BaseError, Error', function(){
@@ -59,6 +68,9 @@ describe('Error Objects', function () {
         'message',
         'srcError',
         'error',
+        'httpCode',
+        'type',
+        'isNodeon',
       ]);
 
     });
@@ -73,6 +85,9 @@ describe('Error Objects', function () {
         'srcError',
         'error',
         'type',
+        'httpCode',
+        'subType',
+        'isNodeon',
       ]);
     });
     it('Authentication Error should be instance of BaseError, Error', function(){
@@ -86,6 +101,9 @@ describe('Error Objects', function () {
         'srcError',
         'error',
         'type',
+        'httpCode',
+        'subType',
+        'isNodeon',
       ]);
     });
     it('JSON Error should be instance of BaseError, Error', function(){
@@ -98,6 +116,9 @@ describe('Error Objects', function () {
         'message',
         'srcError',
         'error',
+        'httpCode',
+        'type',
+        'isNodeon',
       ]);
     });
   });
@@ -111,6 +132,9 @@ describe('Error Objects', function () {
         'name',
         'message',
         'error',
+        'httpCode',
+        'isNodeon',
+        'type',
       ]);
 
       expect(apiRes.stack).to.be.an('undefined');

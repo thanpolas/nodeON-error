@@ -15,9 +15,11 @@ npm install nodeon-error --save
 ## <a name='TOC'>Table of Contents</a>
 
 1. [Overview](#overview)
+    1. [Handling existing errors](#existingErrors)
+    1. [Error Properties](#properties)
 1. [API](#api)
     1. [Signing the Error Objects](#setName)
-    1. [Getting an API Safe verison](#toApi)
+    1. [Getting an API Safe version](#toApi)
 1. [Error Types](#error-types)
     1. [The Unknown Error](#unknownError)
     1. [The JSON Error](#jsonError)
@@ -37,7 +39,7 @@ var appError = require('nodeon-error');
 var error = new appError.Error('A message');
 ```
 
-### Handling Existing Errors
+### <a name='existingErrors'>Handling Existing Errors</a>
 
 When an Error gets thrown from any other library you may simply supply the *alien* Error Object to the first argument of the constructor. Once this is done nodeon-error will do the following:
 
@@ -73,6 +75,27 @@ stat('bogus', function(err, res) {
 });
 ```
 
+**[[⬆]](#TOC)**
+
+### <a name='properties'>Error Properties</a>
+
+All Error Objects extend the Javascript native `Error` Object, thus have all built-in properties. Additionally, the following properties are augmenting the Error Object:
+
+* `name` **string** A Name composed of [your signature](#setName) and the Error Type.
+* `srcError` **?Error** If you instantiate a NodeON Error object with a third-party Error as the first argument of the constructor, it will be stored in this property, otherwise it will be `null`. [See Handling Existing Errors](#existingErrors).
+* `error` **boolean** Always true, helper for consumers to determine if result is an error.
+* `httpCode` **number** Indicates the HTTP Response Code to use, default is 500.
+* `isNodeOn` **boolean** Always true, indicates that the error object is an instance of NodeON.
+* `type` **string** An enumeration of all the NodeON Error types, possible values are:
+    * `error`
+    * `unknown`
+    * `validation`
+    * `authentication`
+    * `database`
+    * `json`
+
+**[[⬆]](#TOC)**
+
 ## API
 
 ### <a name='setName'>Signing the Error Objects</a>
@@ -96,7 +119,7 @@ console.log(error.name);
 
 **[[⬆]](#TOC)**
 
-### <a name='toApi'>Getting an API Safe verison</a>
+### <a name='toApi'>Getting an API Safe version</a>
 
 > ### errInstance.toApi()
 >
@@ -115,7 +138,6 @@ console.log(error.toApi());
 ```
 
 **[[⬆]](#TOC)**
-
 
 ## Error Types
 
@@ -136,6 +158,9 @@ This is the default base error object.
 * `srcError` **?Error** If an Error Object was supplied it will exist here.
 * `error` **boolean** Always true.
 * `stack` **string** The stack trace.
+* `httpCode` **number** Indicates the HTTP Response Code to use, in this case it is 500.
+* `isNodeOn` **boolean** Always true.
+* `type` **string** In this case: `error`.
 
 **[[⬆]](#TOC)**
 
@@ -154,6 +179,10 @@ This is for errors of unknown nature.
 * `srcError` **?Error** If an Error Object was supplied it will exist here.
 * `error` **boolean** Always true.
 * `stack` **string** The stack trace.
+* `httpCode` **number** Indicates the HTTP Response Code to use, in this case it is 500.
+* `isNodeOn` **boolean** Always true.
+* `type` **string** In this case: `unknown`.
+
 
 **[[⬆]](#TOC)**
 
@@ -172,9 +201,11 @@ This is for errors originating from JSON parsing or stringifying.
 * `srcError` **Error** The original JSON exception.
 * `error` **boolean** Always true.
 * `stack` **string** The stack trace.
+* `httpCode` **number** Indicates the HTTP Response Code to use, in this case it is 500.
+* `isNodeOn` **boolean** Always true.
+* `type` **string** In this case: `json`.
 
 **[[⬆]](#TOC)**
-
 
 ### <a name='databaseError'>The Database Error</a>
 
@@ -191,7 +222,10 @@ This is for errors originating for the database.
 * `srcError` **?Error** If an Error Object was supplied it will exist here.
 * `error` **boolean** Always true.
 * `stack` **string** The stack trace.
-* `type` **string** A value from the db error types enumeration available through `appError.Database.Type`:
+* `httpCode` **number** Indicates the HTTP Response Code to use, in this case it is 500.
+* `isNodeOn` **boolean** Always true.
+* `type` **string** In this case: `database`.
+* `subType` **string** A value from the db error types enumeration available through `appError.Database.Type`:
     * `appError.Database.Type.UNKNOWN` "unknown" **default**
     * `appError.Database.Type.MONGO` "mongo"
     * `appError.Database.Type.REDIS` "redis"
@@ -216,6 +250,9 @@ This is for errors originating from validation operations.
 * `message` **string** The error message.
 * `srcError` **?Error** If an Error Object was supplied it will exist here.
 * `error` **boolean** Always true.
+* `httpCode` **number** Indicates the HTTP Response Code to use, in this case it is 400.
+* `isNodeOn` **boolean** Always true.
+* `type` **string** In this case: `validation`.
 * `errors` **Array** An array of `appError.ValidationItem` objects, see [validationItem](#validationItem).
 
 #### <a name='validationItem'>The Validation Item</a>
@@ -268,7 +305,10 @@ This is for errors of authentication nature.
 * `srcError` **?Error** If an Error Object was supplied it will exist here.
 * `error` **boolean** Always true.
 * `stack` **string** The stack trace.
-* `type` **string** A value from the auth error types enumeration available through `appError.Authentication.Type`:
+* `httpCode` **number** Indicates the HTTP Response Code to use, in this case it is 401.
+* `isNodeOn` **boolean** Always true.
+* `type` **string** In this case: `authentication`.
+* `subType` **string** A value from the auth error types enumeration available through `appError.Authentication.Type`:
     * `appError.Authentication.Type.UNKNOWN` "unknown" **default**
     * `appError.Authentication.Type.EMAIL` "email"
     * `appError.Authentication.Type.PASSWORD` "password"
@@ -281,6 +321,9 @@ This is for errors of authentication nature.
 
 ## Release History
 
+- **v0.2.0**, *15 Dec 2014*
+    - Added three new attributes to all error objects: `type`, `httpCode`, `isNodeon`, [read docs for more](#properties).
+    - Renamed the `type` property to `subType` on **Authentication** and **Database** type errors.
 - **v0.1.2**, *09 Dec 2014*
     - Fix reverse assignment of injected errors
 - **v0.1.1**, *21 Nov 2014*
