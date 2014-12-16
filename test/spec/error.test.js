@@ -146,7 +146,7 @@ describe('Error Objects', function () {
     });
   });
 
-  describe.only('Edge Cases', function () {
+  describe('Edge Cases', function () {
     it('should handle third-party error objects with overlapping properties', function () {
       var err = new Error('A message');
       err.name = 'CastError';
@@ -155,7 +155,6 @@ describe('Error Objects', function () {
       err.srcError = 'bogus';
       err.httpCode = 'bogus';
       err.isNodeon = 'bogus';
-
 
       var nodeonError = new appError.Error(err);
       /*jshint camelcase:false */
@@ -169,6 +168,29 @@ describe('Error Objects', function () {
       expect(nodeonError.error).to.be.true;
       expect(nodeonError.type).to.equal('error');
       expect(nodeonError.httpCode).to.equal(500);
+      expect(nodeonError.isNodeon).to.be.true;
+    });
+    it('should handle third-party error objects with overlapping properties on Validation', function () {
+      var err = new Error('A message');
+      err.name = 'CastError';
+      err.type = 'ObjectId';
+      err.error = 'bogus';
+      err.srcError = 'bogus';
+      err.httpCode = 'bogus';
+      err.isNodeon = 'bogus';
+
+      var nodeonError = new appError.Validation(err);
+      /*jshint camelcase:false */
+      expect(nodeonError.src_name).to.equal('CastError');
+      expect(nodeonError.src_error).to.equal('bogus');
+      expect(nodeonError.src_srcError).to.equal('bogus');
+      expect(nodeonError.src_httpCode).to.equal('bogus');
+      expect(nodeonError.src_isNodeon).to.equal('bogus');
+
+      expect(nodeonError.name).to.equal('AppValidationError');
+      expect(nodeonError.error).to.be.true;
+      expect(nodeonError.type).to.equal('validation');
+      expect(nodeonError.httpCode).to.equal(400);
       expect(nodeonError.isNodeon).to.be.true;
     });
   });
