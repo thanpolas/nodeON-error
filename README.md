@@ -321,6 +321,8 @@ This is for errors of authentication nature.
 
 ## Release History
 
+- **v0.2.1**, *16 Dec 2014*
+    - Better protect properties used by nodeon-error, will now prefix overwriting third-party properties with `src_`.
 - **v0.2.0**, *15 Dec 2014*
     - Added three new attributes to all error objects: `type`, `httpCode`, `isNodeon`, [read docs for more](#properties).
     - Renamed the `type` property to `subType` on **Authentication** and **Database** type errors.
