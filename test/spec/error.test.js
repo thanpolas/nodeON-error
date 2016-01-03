@@ -26,8 +26,10 @@ describe('Error Objects', function () {
       expect(instance.stack).to.have.length.above(100);
     }
 
-    it('Signed Error instances should be instances of Error', function() {
+    it.only('Signed Error instances should be instances of Error', function() {
       var error = new appError.Error();
+
+      console.log('STACK:', error.stack);
 
       expect(error).to.be.instanceOf(appError.Error);
       expect(error).to.be.instanceOf(Error);
@@ -44,6 +46,7 @@ describe('Error Objects', function () {
     });
     it('Validation Error should be instance of BaseError, Error', function(){
       var validationError = new appError.Validation();
+      console.log('validationError:', validationError.stack);
       testError(validationError);
       expect(validationError).to.have.property('name', 'AppValidationError');
       expect(validationError.toApi).to.be.a('function');

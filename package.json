@@ -23,8 +23,9 @@
     "test": "./node_modules/.bin/grunt jshint:lib && ./node_modules/.bin/mocha -b test/spec -u bdd  -R spec"
   },
   "dependencies": {
-    "lodash": "~2.4.1",
-    "grunt-contrib-jshint": "^0.10.0"
+    "cip": "^1.0.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "lodash": "~2.4.1"
   },
   "devDependencies": {
     "grunt-release": "~0.7.0",
