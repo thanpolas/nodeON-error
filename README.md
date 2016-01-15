@@ -85,7 +85,7 @@ All Error Objects extend the Javascript native `Error` Object, thus have all bui
 * `srcError` **?Error** If you instantiate a NodeON Error object with a third-party Error as the first argument of the constructor, it will be stored in this property, otherwise it will be `null`. [See Handling Existing Errors](#existingErrors).
 * `error` **boolean** Always true, helper for consumers to determine if result is an error.
 * `httpCode` **number** Indicates the HTTP Response Code to use, default is 500.
-* `isNodeOn` **boolean** Always true, indicates that the error object is an instance of NodeON.
+* `isNodeon` **boolean** Always true, indicates that the error object is an instance of NodeON.
 * `type` **string** An enumeration of all the NodeON Error types, possible values are:
     * `error`
     * `unknown`
@@ -159,7 +159,7 @@ This is the default base error object.
 * `error` **boolean** Always true.
 * `stack` **string** The stack trace.
 * `httpCode` **number** Indicates the HTTP Response Code to use, in this case it is 500.
-* `isNodeOn` **boolean** Always true.
+* `isNodeon` **boolean** Always true.
 * `type` **string** In this case: `error`.
 
 **[[⬆]](#TOC)**
@@ -180,7 +180,7 @@ This is for errors of unknown nature.
 * `error` **boolean** Always true.
 * `stack` **string** The stack trace.
 * `httpCode` **number** Indicates the HTTP Response Code to use, in this case it is 500.
-* `isNodeOn` **boolean** Always true.
+* `isNodeon` **boolean** Always true.
 * `type` **string** In this case: `unknown`.
 
 
@@ -202,7 +202,7 @@ This is for errors originating from JSON parsing or stringifying.
 * `error` **boolean** Always true.
 * `stack` **string** The stack trace.
 * `httpCode` **number** Indicates the HTTP Response Code to use, in this case it is 500.
-* `isNodeOn` **boolean** Always true.
+* `isNodeon` **boolean** Always true.
 * `type` **string** In this case: `json`.
 
 **[[⬆]](#TOC)**
@@ -223,7 +223,7 @@ This is for errors originating for the database.
 * `error` **boolean** Always true.
 * `stack` **string** The stack trace.
 * `httpCode` **number** Indicates the HTTP Response Code to use, in this case it is 500.
-* `isNodeOn` **boolean** Always true.
+* `isNodeon` **boolean** Always true.
 * `type` **string** In this case: `database`.
 * `subType` **string** A value from the db error types enumeration available through `appError.Database.Type`:
     * `appError.Database.Type.UNKNOWN` "unknown" **default**
@@ -251,7 +251,7 @@ This is for errors originating from validation operations.
 * `srcError` **?Error** If an Error Object was supplied it will exist here.
 * `error` **boolean** Always true.
 * `httpCode` **number** Indicates the HTTP Response Code to use, in this case it is 400.
-* `isNodeOn` **boolean** Always true.
+* `isNodeon` **boolean** Always true.
 * `type` **string** In this case: `validation`.
 * `errors` **Array** An array of `appError.ValidationItem` objects, see [validationItem](#validationItem).
 
@@ -306,7 +306,7 @@ This is for errors of authentication nature.
 * `error` **boolean** Always true.
 * `stack` **string** The stack trace.
 * `httpCode` **number** Indicates the HTTP Response Code to use, in this case it is 401.
-* `isNodeOn` **boolean** Always true.
+* `isNodeon` **boolean** Always true.
 * `type` **string** In this case: `authentication`.
 * `subType` **string** A value from the auth error types enumeration available through `appError.Authentication.Type`:
     * `appError.Authentication.Type.UNKNOWN` "unknown" **default**
